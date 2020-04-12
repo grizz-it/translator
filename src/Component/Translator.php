@@ -62,8 +62,8 @@ class Translator implements TranslatorInterface
      */
     public function register(string $left, string $right): void
     {
-        $this->translationsLeft[$left] = $right;
-        $this->translationsRight[$right] = $left;
+        $this->translationsLeft[$right] = $left;
+        $this->translationsRight[$left] = $right;
     }
 
     /**

@@ -65,12 +65,12 @@ class ArrayTranslator implements ArrayTranslatorInterface
         [$left, $right] = [array_values($left), array_values($right)];
         $this->translationsLeft = array_merge(
             $this->translationsLeft,
-            array_fill_keys($left, $right)
+            array_fill_keys($right, $left)
         );
 
         $this->translationsRight = array_merge(
             $this->translationsRight,
-            array_fill_keys($right, $left)
+            array_fill_keys($left, $right)
         );
     }
 

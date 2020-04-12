@@ -107,8 +107,8 @@ class TranslatorTest extends TestCase
                 'bar',
                 ['baz'],
                 ['qux'],
-                'baz',
-                'qux'
+                'qux',
+                'baz'
             ]
         ];
     }
