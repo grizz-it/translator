@@ -7,10 +7,10 @@
 
 namespace GrizzIt\Translator\Component;
 
-use GrizzIt\Translator\Common\ArrayTranslatorInterface;
+use GrizzIt\Translator\Common\TranslatorInterface;
 use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
-class ArrayTranslator implements ArrayTranslatorInterface
+class MatchingTranslator implements TranslatorInterface
 {
     /**
      * Contains all possible left to right translations.
@@ -55,57 +55,37 @@ class ArrayTranslator implements ArrayTranslatorInterface
     }
 
     /**
-     * Registers an option for translation.
+     * Registers a translation.
      *
-     * @param string[] $left
-     * @param string[] $right
+     * @param string $left
+     * @param string $right
      *
      * @return void
      */
-    public function register(array $left, array $right): void
+    public function register(string $left, string $right): void
     {
-        [$left, $right] = [array_values($left), array_values($right)];
-        $this->translationsLeft = array_merge(
-            $this->translationsLeft,
-            array_fill_keys($right, $left)
-        );
-
-        $this->translationsRight = array_merge(
-            $this->translationsRight,
-            array_fill_keys($left, $right)
-        );
+        $this->translationsLeft[$right] = $left;
+        $this->translationsRight[$left] = $right;
     }
 
     /**
-     * Retrieves the first match of the left to right translation.
+     * Translates left to right.
      *
      * @param string $input
      *
      * @return string
-     */
-    public function getLeft(string $input): string
-    {
-        return $this->getAllLeft($input)[0];
-    }
-
-    /**
-     * Retrieves all translations from the left to right.
-     *
-     * @param string $input
-     *
-     * @return array
      *
      * @throws CouldNotTranslateException When the translation can not be resolved.
      */
-    public function getAllLeft(string $input): array
+    public function getLeft(string $input): string
     {
-        $output = $this->getAll(
+        $output = $this->get(
             $input,
             $this->translationsLeft,
-            [$this->defaultRight]
+            $this->defaultRight
         );
 
-        if (is_null($output[0])) {
+        if (is_null($output)) {
             throw new CouldNotTranslateException($input);
         }
 
@@ -113,35 +93,23 @@ class ArrayTranslator implements ArrayTranslatorInterface
     }
 
     /**
-     * Retrieves the first match of the right to left translation.
+     * Translates right to left.
      *
      * @param string $input
      *
      * @return string
-     */
-    public function getRight(string $input): string
-    {
-        return $this->getAllRight($input)[0];
-    }
-
-    /**
-     * Retrieves all translations from the right to left.
-     *
-     * @param string $input
-     *
-     * @return array
      *
      * @throws CouldNotTranslateException When the translation can not be resolved.
      */
-    public function getAllRight(string $input): array
+    public function getRight(string $input): string
     {
-        $output = $this->getAll(
+        $output = $this->get(
             $input,
             $this->translationsRight,
-            [$this->defaultLeft]
+            $this->defaultLeft
         );
 
-        if (is_null($output[0])) {
+        if (is_null($output)) {
             throw new CouldNotTranslateException($input);
         }
 
@@ -153,14 +121,16 @@ class ArrayTranslator implements ArrayTranslatorInterface
      *
      * @param string $input
      * @param array $seek
-     * @param array|null $default
+     * @param string|null $default
      *
-     * @return array|null
+     * @return string|null
      */
-    private function getAll(string $input, array $seek, ?array $default): ?array
+    private function get(string $input, array $seek, ?string $default): ?string
     {
-        if (array_key_exists($input, $seek)) {
-            return $seek[$input];
+        foreach ($seek as $option => $value) {
+            if (fnmatch($input, $option)) {
+                return $value;
+            }
         }
 
         return $default;

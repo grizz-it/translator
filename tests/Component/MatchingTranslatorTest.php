@@ -8,23 +8,21 @@
 namespace GrizzIt\Translator\Tests\Component;
 
 use PHPUnit\Framework\TestCase;
-use GrizzIt\Translator\Component\ArrayTranslator;
+use GrizzIt\Translator\Component\MatchingTranslator;
 use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
 /**
- * @coversDefaultClass \GrizzIt\Translator\Component\ArrayTranslator
+ * @coversDefaultClass \GrizzIt\Translator\Component\MatchingTranslator
  * @covers \GrizzIt\Translator\Exception\CouldNotTranslateException
  */
-class ArrayTranslatorTest extends TestCase
+class MatchingTranslatorTest extends TestCase
 {
     /**
      * @covers ::__construct
      * @covers ::register
      * @covers ::getLeft
-     * @covers ::getAllLeft
      * @covers ::getRight
-     * @covers ::getAllRight
-     * @covers ::getAll
+     * @covers ::get
      *
      * @param string|null $defaultLeft
      * @param string|null $defaultRight
@@ -45,7 +43,7 @@ class ArrayTranslatorTest extends TestCase
         string $left,
         string $right
     ): void {
-        $subject = new ArrayTranslator($defaultLeft, $defaultRight);
+        $subject = new MatchingTranslator($defaultLeft, $defaultRight);
 
         foreach ($translationsLeft as $key => $value) {
             $subject->register($value, $translationsRight[$key]);
@@ -59,14 +57,13 @@ class ArrayTranslatorTest extends TestCase
      * @covers ::__construct
      * @covers ::register
      * @covers ::getLeft
-     * @covers ::getAllLeft
-     * @covers ::getAll
+     * @covers ::get
      *
      * @return void
      */
     public function testGetLeftException(): void
     {
-        $subject = new ArrayTranslator();
+        $subject = new MatchingTranslator();
 
         $this->expectException(CouldNotTranslateException::class);
 
@@ -77,14 +74,13 @@ class ArrayTranslatorTest extends TestCase
      * @covers ::__construct
      * @covers ::register
      * @covers ::getRight
-     * @covers ::getAllRight
-     * @covers ::getAll
+     * @covers ::get
      *
      * @return void
      */
     public function testGetRightException(): void
     {
-        $subject = new ArrayTranslator();
+        $subject = new MatchingTranslator();
 
         $this->expectException(CouldNotTranslateException::class);
 
@@ -102,16 +98,16 @@ class ArrayTranslatorTest extends TestCase
             [
                 'foo',
                 'bar',
-                [['baz']],
-                [['qux']],
+                ['baz'],
+                ['qux'],
                 'foo',
                 'bar'
             ],
             [
                 'foo',
                 'bar',
-                [['baz']],
-                [['qux']],
+                ['baz'],
+                ['qux'],
                 'qux',
                 'baz'
             ]

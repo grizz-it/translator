@@ -8,14 +8,14 @@
 namespace GrizzIt\Translator\Tests\Component;
 
 use PHPUnit\Framework\TestCase;
-use GrizzIt\Translator\Component\ArrayTranslator;
+use GrizzIt\Translator\Component\MatchingArrayTranslator;
 use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
 /**
- * @coversDefaultClass \GrizzIt\Translator\Component\ArrayTranslator
+ * @coversDefaultClass \GrizzIt\Translator\Component\MatchingArrayTranslator
  * @covers \GrizzIt\Translator\Exception\CouldNotTranslateException
  */
-class ArrayTranslatorTest extends TestCase
+class MatchingArrayTranslatorTest extends TestCase
 {
     /**
      * @covers ::__construct
@@ -45,7 +45,7 @@ class ArrayTranslatorTest extends TestCase
         string $left,
         string $right
     ): void {
-        $subject = new ArrayTranslator($defaultLeft, $defaultRight);
+        $subject = new MatchingArrayTranslator($defaultLeft, $defaultRight);
 
         foreach ($translationsLeft as $key => $value) {
             $subject->register($value, $translationsRight[$key]);
@@ -66,7 +66,7 @@ class ArrayTranslatorTest extends TestCase
      */
     public function testGetLeftException(): void
     {
-        $subject = new ArrayTranslator();
+        $subject = new MatchingArrayTranslator();
 
         $this->expectException(CouldNotTranslateException::class);
 
@@ -84,7 +84,7 @@ class ArrayTranslatorTest extends TestCase
      */
     public function testGetRightException(): void
     {
-        $subject = new ArrayTranslator();
+        $subject = new MatchingArrayTranslator();
 
         $this->expectException(CouldNotTranslateException::class);
 

@@ -41,6 +41,13 @@ Registration is the only other key difference, every translation
 left and right needs to be registered as an array.
 Even if either one only has one option.
 
+### [MatchingTranslator](src/Component/MatchingTranslator.php) & [MatchingArrayTranslator](src/Component/MatchingArrayTranslator.php)
+
+The MatchingTranslator and MatchingArrayTranslator are similar to the
+aforementioned translators. However these translator are slower, because
+they check each individual key during a comparison supporting the Unix filename
+pattern.
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

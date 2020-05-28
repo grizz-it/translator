@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
@@ -8,11 +9,11 @@ namespace GrizzIt\Translator\Tests\Component;
 
 use PHPUnit\Framework\TestCase;
 use GrizzIt\Translator\Component\Translator;
-use GrizzIt\Translator\Component\CouldNotTranslateException;
+use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
 /**
  * @coversDefaultClass \GrizzIt\Translator\Component\Translator
- * @covers \GrizzIt\Translator\Component\CouldNotTranslateException
+ * @covers \GrizzIt\Translator\Exception\CouldNotTranslateException
  */
 class TranslatorTest extends TestCase
 {

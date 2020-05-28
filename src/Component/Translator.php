@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
@@ -7,6 +8,7 @@
 namespace GrizzIt\Translator\Component;
 
 use GrizzIt\Translator\Common\TranslatorInterface;
+use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
 class Translator implements TranslatorInterface
 {

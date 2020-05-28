@@ -10,7 +10,7 @@ namespace GrizzIt\Translator\Component;
 use GrizzIt\Translator\Common\ArrayTranslatorInterface;
 use GrizzIt\Translator\Exception\CouldNotTranslateException;
 
-class ArrayTranslator implements ArrayTranslatorInterface
+class MatchingArrayTranslator implements ArrayTranslatorInterface
 {
     /**
      * Contains all possible left to right translations.
@@ -159,8 +159,10 @@ class ArrayTranslator implements ArrayTranslatorInterface
      */
     private function getAll(string $input, array $seek, ?array $default): ?array
     {
-        if (array_key_exists($input, $seek)) {
-            return $seek[$input];
+        foreach ($seek as $option => $value) {
+            if (fnmatch($input, $option)) {
+                return $value;
+            }
         }
 
         return $default;

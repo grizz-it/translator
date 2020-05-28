@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Copyright (C) GrizzIT, Inc. All rights reserved.
  * See LICENSE for license details.
  */
 
-namespace GrizzIt\Translator\Component;
+namespace GrizzIt\Translator\Exception;
 
 use Exception;
 
