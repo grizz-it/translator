@@ -17,28 +17,28 @@ class MatchingTranslator implements TranslatorInterface
      *
      * @var string[]
      */
-    private $translationsLeft = [];
+    private array $translationsLeft = [];
 
     /**
      * Contains all possible right to left translations.
      *
      * @var string[]
      */
-    private $translationsRight = [];
+    private array $translationsRight = [];
 
     /**
      * Contains the default value for left.
      *
      * @var string|null
      */
-    private $defaultLeft;
+    private ?string $defaultLeft;
 
     /**
      * Contains the default value for right.
      *
      * @var string|null
      */
-    private $defaultRight;
+    private ?string $defaultRight;
 
     /**
      * Constructor.
